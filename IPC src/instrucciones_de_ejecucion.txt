@@ -1,0 +1,67 @@
+====================================================================
+  SISTEMAS OPERATIVOS - COMUNICACIÓN E INTERPROCESOS (IPC) Y SINCRONIZACIÓN
+====================================================================
+
+--------------------------------------------------------------------
+1. CRÉDITOS Y RECONOCIMIENTOS
+--------------------------------------------------------------------
+- Planteamiento del ejercicio y autoría del proceso P3 (p3.c):
+  Profesor Juan Felipe Muñoz (jfmunozf)
+  Asignatura: Sistemas Operativos
+  Universidad Nacional de Colombia - Sede Medellín
+
+- Solución e implementación de los procesos P1 (p1.c) y P2 (p2.c):
+  Daniel Felipe Villegas Ibarra
+
+--------------------------------------------------------------------
+2. DESCRIPCIÓN DEL PROYECTO
+--------------------------------------------------------------------
+Este proyecto resuelve un problema de comunicación entre dos procesos (P1 y P2) 
+a través de un mecanismo de memoria compartida POSIX habilitado por un tercer 
+proceso supervisor (P3). La sincronización del acceso a la memoria se realiza 
+mediante semáforos nombrados para evitar condiciones de carrera.
+
+--------------------------------------------------------------------
+3. REQUISITOS Y COMPILACIÓN
+--------------------------------------------------------------------
+Sistema Operativo: Entorno de tipo Unix/Linux.
+Compilador: GCC
+
+Para compilar los tres programas, abre una terminal en la carpeta del proyecto y ejecuta:
+
+    gcc -o p3 p3.c -lpthread -lrt
+    gcc -o p2 p2.c -lpthread -lrt
+    gcc -o p1 p1.c -lpthread -lrt
+
+--------------------------------------------------------------------
+4. GUÍA DE EJECUCIÓN (PASO A PASO)
+--------------------------------------------------------------------
+Para ejecutar la simulación correctamente se requieren tres terminales independientes:
+
+PASO 1: En la Terminal 3, iniciar el proceso proveedor del IPC (P3):
+    ./p3
+
+    (P3 creará el recurso de memoria compartida '/SHR' y quedará en espera).
+
+PASO 2: En la Terminal 2, iniciar el proceso consumidor/receptor (P2):
+    ./p2
+
+    (P2 quedará listo a la espera del primer valor).
+
+PASO 3: En la Terminal 1, iniciar el proceso emisor (P1) pasando el valor inicial 
+        'X' y el número de iteraciones 'N' como argumentos:
+
+    Sintaxis:
+        ./p1 <X> <N>
+
+    Ejemplo:
+        ./p1 10 5
+
+--------------------------------------------------------------------
+5. FINALIZACIÓN Y LIMPIEZA
+--------------------------------------------------------------------
+- P1 y P2 terminarán automáticamente una vez cumplidas las N iteraciones y 
+  P1 envíe la señal de parada (-1).
+- P3 continuará ejecutándose hasta que presiones [CTRL + C] en su respectiva terminal 
+  para liberar los recursos creados en el sistema.
+====================================================================
